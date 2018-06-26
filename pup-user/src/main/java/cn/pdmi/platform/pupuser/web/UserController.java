@@ -1,5 +1,6 @@
 package cn.pdmi.platform.pupuser.web;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,6 +36,9 @@ import net.sf.json.JSONObject;
 public class UserController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SSS");
+	
 	@Autowired
 	private PupConfig pupConfig;
 	@Autowired
@@ -67,8 +71,8 @@ public class UserController {
 		// 设置1天有效时间
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_MONTH, 1);
-		userObject.put("exp", cal.getTime());
-		userObject.put("iat", new Date());
+		userObject.put("exp", sdf.format(cal.getTime()));
+		userObject.put("iat", sdf.format(new Date()));
 		
 	/*	userObject.put("iss", "");	// jwt签发者
 		userObject.put("sub", "");	// jwt所面向的用户
