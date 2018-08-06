@@ -9,7 +9,13 @@ spring:
       discovery:
         enabled: true
         service-id: config-service
-      
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 20MB 
+      location: /home/zhangjunyong/uploadfiles/
+            
+
 
 server:
   port: 8081
