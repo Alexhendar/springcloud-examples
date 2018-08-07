@@ -11,6 +11,8 @@ spring:
         service-id: config-service
 server:
   port: 8080
+  connection-timeout: 10
+    
 eureka:
   client:
     service-url:
