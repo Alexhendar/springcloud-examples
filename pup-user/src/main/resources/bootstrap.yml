@@ -19,6 +19,7 @@ spring:
 
 server:
   port: 8081
+  
 eureka:
   client:
     service-url:
@@ -26,3 +27,11 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
+feign:
+  hystrix:
+    enabled: true
+management:
+    endpoints:
+        web:
+          exposure:
+            include: '*'
