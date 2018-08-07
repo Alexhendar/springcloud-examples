@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: feign-consumer
+
+server:
+  port: 8082
+  
+eureka:
+  client:
+    service-url:
+      defaultZone: http://10.30.5.112:8761/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+management:
+    endpoints:
+        web:
+          exposure:
+            include: '*'
