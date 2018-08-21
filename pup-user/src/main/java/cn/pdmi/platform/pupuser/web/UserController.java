@@ -27,7 +27,7 @@ import com.chinasofti.oauth2.client.model.CSIClientCertification;
 import com.chinasofti.oauth2.client.util.Constant;
 import com.chinasofti.oauth2.exception.OAuth2Exception;
 
-import cn.pdmi.platform.pupuser.pup.PupConfig;
+import cn.pdmi.platform.pupuser.config.PupConfig;
 import cn.pdmi.platform.pupuser.vo.JWTToken;
 import net.sf.json.JSONObject;
 @CrossOrigin(origins = "*", maxAge = 3600)
