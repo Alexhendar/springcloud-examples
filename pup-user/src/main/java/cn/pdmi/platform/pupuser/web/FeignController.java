@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.pdmi.platform.pupuser.service.FeignService;
+import cn.pdmi.platform.pupuser.service.UserService;
 import cn.pdmi.platform.pupuser.vo.User;
 import cn.pdmi.platform.pupuser.vo.UserVO;
 import net.sf.json.JSONObject;
@@ -19,7 +19,7 @@ import net.sf.json.JSONObject;
 public class FeignController {
 	private static final Logger logger = LoggerFactory.getLogger(FeignController.class);
 	@Autowired
-	private FeignService  feignService;
+	private UserService  feignService;
 
 	@RequestMapping(value="/hello",method=RequestMethod.GET)
 	public String hello(@RequestParam String name) {
@@ -33,7 +33,7 @@ public class FeignController {
 	}
 	@RequestMapping("/demo")
 	public String demo(@RequestParam String name) {
-		UserVO userVO = feignService.demo(name);
+		UserVO userVO = feignService.findUserByName(name);
 		logger.info("feign demo with id : {},and name: {}",userVO.getId(),userVO.getName());
 		return userVO.getName();
 	}

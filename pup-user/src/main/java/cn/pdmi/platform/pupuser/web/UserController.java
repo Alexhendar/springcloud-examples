@@ -12,12 +12,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
 import org.springframework.security.jwt.crypto.sign.RsaSigner;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +30,7 @@ import com.chinasofti.oauth2.client.util.Constant;
 import com.chinasofti.oauth2.exception.OAuth2Exception;
 
 import cn.pdmi.platform.pupuser.config.PupConfig;
+import cn.pdmi.platform.pupuser.service.impl.PupUserService;
 import cn.pdmi.platform.pupuser.vo.JWTToken;
 import net.sf.json.JSONObject;
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -38,6 +41,8 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SSS");
+	@Autowired
+	private PupUserService pupUserService;
 	
 	@Autowired
 	private PupConfig pupConfig;
@@ -89,11 +94,13 @@ public class UserController {
 	}
 	/**
 	 * 退出当前系统的应用状态，单点登录的状态由app client处理
+	 * 解析accesstoken，将退出登录的token存入redis，并设置有效期为token的到期时间
 	 * @return 当前系统退出登录处理结果
 	 */
 	@PutMapping("/logout")
-	public String logout() {
-		return "logout";
+	public ResponseEntity<String> logout(@RequestHeader("accesstoken") String accesstoken) {
+		pupUserService.logout(accesstoken);
+		return new ResponseEntity<String>("logout success", HttpStatus.OK);
 	}
 	@GetMapping("/pup")
 	public String pup(@RequestParam String code,HttpServletRequest request,HttpServletResponse response) {
